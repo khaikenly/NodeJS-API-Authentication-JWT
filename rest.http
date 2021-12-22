@@ -2,3 +2,12 @@ GET http://localhost:5000
 
 ###
 GET http://localhost:5000/abc
+
+###
+POST  http://localhost:5000/user/register
+Content-Type: application/json
+
+{
+    "email": "abc@gmail.com",
+    "password": "123123123!@#"
+}
