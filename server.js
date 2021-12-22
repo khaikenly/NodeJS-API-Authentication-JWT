@@ -3,7 +3,13 @@ const app = express();
 const createError = require('http-errors');
 const userRoute = require('./Routes/User.route');
 require('dotenv').config();
-require('./helpers/connections_mongdb');
+
+// require('./helpers/connections_mongdb');
+
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
+// require('./helpers/connections_multi_mongdb');
 
 const PORT = process.env.PORT || 3000;
 
