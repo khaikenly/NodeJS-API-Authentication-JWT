@@ -9,7 +9,6 @@ route.post('/register', async (req, res, next) => {
     try {
         const { email, password } = req.body;
         const { error } = userValidate(req.body);
-        console.log(error);
         if (error) {
             throw createError(error.details[0].message);
         }
@@ -19,14 +18,20 @@ route.post('/register', async (req, res, next) => {
             throw createError.Conflict(`${email} is already been register!!!`);
         }
 
-        const isCreate = await User.create({
-            username: email,
-            password: password
+        // const isCreate = await User.create({
+        //     username: email,
+        //     password: password
+        // }); không sử dụng được middleware('pre') trong model
+
+        const user = new User({
+            username: email, 
+            password
         });
+        const savedUser = await user.save();
 
         return res.json({
             status: 200,
-            elements: isCreate
+            elements: savedUser
         });
 
     } catch (error) {
