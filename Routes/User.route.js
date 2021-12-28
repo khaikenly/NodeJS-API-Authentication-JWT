@@ -4,6 +4,7 @@ const route = express.Router();
 
 const User = require('../Models/User.model');
 const { userValidate } = require('../helpers/Validation');
+const {signAccessToken} = require('../helpers/sign_token')
 
 route.post('/register', async (req, res, next) => {
     try {
@@ -62,9 +63,12 @@ route.post('/login', async (req, res, next) => {
             throw createError.Unauthorized();
         }
 
+        const accessToken = await signAccessToken(user._id);
+
         return res.json({
             status: 200,
-            message: "Loggin successfully!!"
+            message: "Loggin successfully!!",
+            accessToken
         });
     } catch (error) {
         next(error);
@@ -74,5 +78,5 @@ route.post('/login', async (req, res, next) => {
 route.post('/logout', (req, res, next) => {
     res.send('logout');
 });
-
+    
 module.exports = route;
