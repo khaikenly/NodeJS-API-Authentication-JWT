@@ -27,4 +27,12 @@ UserSchema.pre('save', async function (next){
     }
 });
 
+UserSchema.methods.isCheckPassword = async function(passwordHash) {
+    try {
+        return bcrypt.compareSync(passwordHash, this.password);
+    } catch (error) {
+        return error;
+    }
+}
+
 module.exports =  connectionTest.model('users',UserSchema);

@@ -24,7 +24,7 @@ route.post('/register', async (req, res, next) => {
         // }); không sử dụng được middleware('pre') trong model
 
         const user = new User({
-            username: email, 
+            username: email,
             password
         });
         const savedUser = await user.save();
@@ -39,12 +39,36 @@ route.post('/register', async (req, res, next) => {
     }
 });
 
-route.post('/refresh-token', (req, res, next) => {
+route.post('/refresh-token', async (req, res, next) => {
     res.send('refresh-token');
 });
 
-route.post('/login', (req, res, next) => {
-    res.send('login');
+route.post('/login', async (req, res, next) => {
+    try {
+        const { email, password } = req.body;
+
+        const { error } = userValidate(req.body);
+        if (error) {
+            throw createError(error.details[0].message);
+        }
+
+        const user = await User.findOne({ username: email }).exec();
+        if (!user) {
+            throw createError.NotFound("user don't register!");
+        }
+
+        const isValid = await user.isCheckPassword(password);
+        if (!isValid) {
+            throw createError.Unauthorized();
+        }
+
+        return res.json({
+            status: 200,
+            message: "Loggin successfully!!"
+        });
+    } catch (error) {
+        next(error);
+    }
 });
 
 route.post('/logout', (req, res, next) => {
