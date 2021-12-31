@@ -20,3 +20,7 @@ Content-Type: application/json
     "email": "khainp1@gmail.com",
     "password": "abc1!231"
 }
+
+###
+GET http://localhost:5000/user/getlists
+Authorization: Bear eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MWNhN2RmYzBiYzU1Y2EyZWM1ZTk3NTIiLCJpYXQiOjE2NDA5MjEwMjksImV4cCI6MTY0MDkyMTA4OX0.iq9ULHUe1sQnxnb7E3WDGQDBSEwwe9fMaRtOpIh-cpM
