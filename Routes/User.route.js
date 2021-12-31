@@ -4,7 +4,7 @@ const route = express.Router();
 
 const User = require('../Models/User.model');
 const { userValidate } = require('../helpers/Validation');
-const {signAccessToken} = require('../helpers/sign_token')
+const {signAccessToken, signRefreshToken} = require('../helpers/sign_token')
 const {verifyToken} = require('../middleware/auth');
 
 route.post('/register', async (req, res, next) => {
@@ -65,11 +65,13 @@ route.post('/login', async (req, res, next) => {
         }
 
         const accessToken = await signAccessToken(user._id);
+        const refreshToken = await signRefreshToken(user._id);
 
         return res.json({
             status: 200,
             message: "Loggin successfully!!",
-            accessToken
+            accessToken,
+            refreshToken
         });
     } catch (error) {
         next(error);

@@ -20,4 +20,24 @@ const signAccessToken = async (userId)=>{
     });
 }
 
-module.exports = {signAccessToken};
+const signRefreshToken = async (userId)=>{
+    return new Promise((resolve, reject)=>{
+        const payload = {
+            userId
+        }
+
+        const secret = process.env.SECRET_KEY_REFRESH_TOKEN;
+        const opitons = {
+            expiresIn: '1d'
+        }
+
+        jwt.sign(payload,secret,opitons, (err, token)=>{
+            if (err) {
+                reject(err);
+            }
+            resolve(token);
+        })
+    });
+}
+
+module.exports = {signAccessToken, signRefreshToken};
