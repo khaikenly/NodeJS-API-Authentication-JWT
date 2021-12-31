@@ -5,6 +5,7 @@ const route = express.Router();
 const User = require('../Models/User.model');
 const { userValidate } = require('../helpers/Validation');
 const {signAccessToken} = require('../helpers/sign_token')
+const {verifyToken} = require('../middleware/auth');
 
 route.post('/register', async (req, res, next) => {
     try {
@@ -77,6 +78,22 @@ route.post('/login', async (req, res, next) => {
 
 route.post('/logout', (req, res, next) => {
     res.send('logout');
+});
+
+
+route.get('/getlists',verifyToken, (req, res, next) => {
+    const users = [
+        {
+            email: 'abc@gmail.com'
+        },
+        {
+            email: 'abc@gmail.com'
+        }
+    ]
+
+    res.json({
+        users
+    });
 });
     
 module.exports = route;
