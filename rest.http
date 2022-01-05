@@ -23,12 +23,12 @@ Content-Type: application/json
 
 ###
 GET http://localhost:5000/user/getlists
-Authorization: Bear eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NDEyNjYwNDMsImV4cCI6MTY0MTI2NjEwM30.0k6SReyYDm2zhBbZ6Gzode909Wm5mWyHVfBTiHU9nAY
+Authorization: Bear eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NDEzNTA2MDcsImV4cCI6MTY0MTM1MDY2N30.SattkMXIFFEc8spPnNF7lkDusGcWJFUHxI6WkiuutRs
 
 ###
 POST http://localhost:5000/user/refresh-token
 Content-Type: application/json
 
 {
-    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MWNhN2RmYzBiYzU1Y2EyZWM1ZTk3NTIiLCJpYXQiOjE2NDEyNjIwMDksImV4cCI6MTY0MTM0ODQwOX0.kNJFFkCoRj6VaHgq6QwmQjuBbgfjlMxVyEyTjd28x_M"
+    "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MWNhN2RmYzBiYzU1Y2EyZWM1ZTk3NTIiLCJpYXQiOjE2NDEzNTA5MzUsImV4cCI6MTY0MTQzNzMzNX0.kAWsdk0EzobGEwq852keK2oezKzC6XgYsYslH_jEQyA"
 }
