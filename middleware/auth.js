@@ -21,22 +21,18 @@ const verifyToken = (req, res, next) => {
     }
 }
 
-const checkRefreshTokenRedis = async (key, refreshToken)=>{
-    return await client.get(key);
-}
-
 const verifyRefreshToken = async (refreshToken)=>{
     return new Promise((resolve, reject)=>{
         jwt.verify(refreshToken, process.env.SECRET_KEY_REFRESH_TOKEN, (err, payload)=>{
             if (err) {
-                return reject(err);
+                return reject(createError.Unauthorized());
             }
             (async ()=>{
                 const reply = await client.get(payload.userId);
                 if (refreshToken === reply) {
                     return resolve(payload)
                 }
-                return reject(createError.Unauthorized())
+                return reject(createError.Unauthorized());
             })();
         })
     });
