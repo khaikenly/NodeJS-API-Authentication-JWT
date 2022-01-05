@@ -1,4 +1,6 @@
 const jwt = require('jsonwebtoken');
+const client = require('../helpers/connections_redis');
+const createError = require('http-errors')
 
 const signAccessToken = async (userId)=>{
     return new Promise((resolve, reject)=>{
@@ -32,10 +34,13 @@ const signRefreshToken = async (userId)=>{
         }
 
         jwt.sign(payload,secret,opitons, (err, token)=>{
-            if (err) {
-                reject(err);
-            }
-            resolve(token);
+            if (err) return reject(err);
+            client.set(userId.toString(), token,{EX: 365*24*60*60, NX: true},(err, reply) =>{
+                if(err){
+                    return reject(createError.InternalServerError())
+                }
+            });
+            return resolve(token);
         })
     });
 }
