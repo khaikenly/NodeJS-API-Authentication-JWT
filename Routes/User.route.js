@@ -6,6 +6,7 @@ const User = require('../Models/User.model');
 const { userValidate } = require('../helpers/Validation');
 const {signAccessToken, signRefreshToken} = require('../helpers/token-generator');
 const {verifyToken, verifyRefreshToken} = require('../middleware/auth');
+const client = require('../helpers/connections_redis');
 
 route.post('/register', async (req, res, next) => {
     try {
@@ -90,8 +91,19 @@ route.post('/login', async (req, res, next) => {
     }
 });
 
-route.post('/logout', (req, res, next) => {
-    res.send('logout');
+route.delete('/logout', async (req, res, next) => {
+    try {
+        const {refreshToken} = req.body;
+        if(!refreshToken) throw createError.BadRequest();
+        const payload = await verifyRefreshToken(refreshToken);
+        const {err, reply} = client.del(payload.userId);
+        if(err) throw createError.InternalServerError();
+        res.json({
+            message: 'Logout'
+        });
+    } catch (error) {
+        next(error);
+    }
 });
 
 
