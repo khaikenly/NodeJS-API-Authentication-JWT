@@ -22,7 +22,12 @@ function newConnection(uri){
     return conn;
 };
 
-const connectionTest = new newConnection(process.env.URI_MONGODB_TEST);
-const connectionUser = new newConnection(process.env.URI_MONGODB_USER);
+const dbHost = process.env.DB_HOST || 'localhost'
+const dbPort = process.env.DB_PORT || 27017
+const dbName = process.env.DB_NAME || 'test'
 
-module.exports = {connectionTest,connectionUser}
+const URI_MONGODB_TEST_DOCKER= `mongodb://${dbHost}:${dbPort}/${dbName}`
+const connectionTest = new newConnection(URI_MONGODB_TEST_DOCKER);
+// const connectionUser = new newConnection(process.env.URI_MONGODB_USER);
+
+module.exports = {connectionTest}
